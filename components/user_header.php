@@ -54,8 +54,8 @@
       <a href="update_profile.php" class="btn">Actualizar Perfil</a>
 
       <div class="flex-btn">
-        <a href="admin_login.php" class="option-btn">Iniciar sesión</a>
-        <a href="register_admin.php" class="option-btn">Registrarse</a>
+        <a href="user_login.php" class="option-btn">Iniciar sesión</a>
+        <a href="user_register.php" class="option-btn">Registrarse</a>
       </div>
       <a href="../components/user_logout.php" onclick="return confirm('¿Cerrar sesión en este sitio web?');"
         class="delete-btn">Cerrar sesión</a>
@@ -64,8 +64,8 @@
       ?>
       <p>¡Por favor inicie sesión o regístrese primero!</p>
       <div class="flex-btn">
-        <a href="admin_login.php" class="option-btn">Iniciar sesión</a>
-        <a href="register_admin.php" class="option-btn">Registrarse</a>
+        <a href="user_login.php" class="option-btn">Iniciar sesión</a>
+        <a href="user_register.php" class="option-btn">Registrarse</a>
       </div>
       <?php
         }
