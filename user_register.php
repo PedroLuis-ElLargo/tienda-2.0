@@ -3,10 +3,37 @@
 
   session_start();
 
-if (isset($_SESSION['user_id'])) {
-  $user_id = $_SESSION['user_id'];
-}else {
-  $user_id = '';
+  if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+  }else {
+    $user_id = '';
+  }
+
+  if(isset($_POST['submit'])){
+    $name = $_POST['name'];
+    $name = filter_var($name, FILTER_SANITIZE_STRING);
+    $email = $_POST['email'];
+    $email = filter_var($email, FILTER_SANITIZE_STRING);
+    $pass = sha1($_POST['pass']);
+    $pass = filter_var($pass, FILTER_SANITIZE_STRING);
+    $cpass = sha1($_POST['cpass']);
+    $cpass = filter_var($cpass, FILTER_SANITIZE_STRING);
+
+    $select_user = $connect->prepare("SELECT * FROM `users` WHERE email = ?");
+    $select_user->execute([$email]);
+    $fetch_user_id = $select_user->fetch(PDO::FETCH_ASSOC);
+  
+  if ($select_user->rowCount() > 0) {
+    $message[] = '¡Este usuario ya existe!';
+  }else{
+    if ($pass != $cpass) {
+      $message[] = '¡Confirmar contraseña, no coinciden!';
+    }else{
+      $insert_user = $connect->prepare("INSERT INTO `users` (name, email, password) VALUES(?,?,?)");
+      $insert_user->execute([$name, $email, $cpass]);
+      $message[] = '¡Nuevo usuario registrado!';
+    }
+  }
 }
 ?>
 
@@ -29,7 +56,31 @@ if (isset($_SESSION['user_id'])) {
 <body>
   <?php include 'components/user_header.php'; ?>
 
+  <!-- Register users section starts -->
+  <section class=" form-container">
+    <form action="" method="post">
+      <h3>Nuevo Registro</h3>
 
+      <input type="text" name="name" class="box" placeholder="Ingrese su nombre" maxlength="20" required
+        oninput="this.value = this.value.replace(/\s/g, '')">
+
+      <input type="email" name="email" class="box" placeholder="Ingrese su correo" maxlength="50" required
+        oninput="this.value = this.value.replace(/\s/g, '')">
+
+      <input type="password" name="pass" required placeholder="Ingresa tu contraseña" maxlength="20" class="box"
+        oninput="this.value = this.value.replace(/\s/g, '')">
+
+      <input type="password" name="cpass" required placeholder="Confirmar contraseña" maxlength="20" class="box"
+        oninput="this.value = this.value.replace(/\s/g, '')">
+
+      <input type="submit" value="Regístrate Ahora" class="btn" name="submit">
+      <p>¡Ya tengo una cuenta!</p>
+      <a href="user_login.php" class="option-btn">Iniciar sección</a>
+    </form>
+  </section>
+  <!-- Register users section ends -->
+
+  <?php include 'components/footer.php'; ?>
   <!-- Custom js file link -->
   <script src="../js/main.js"></script>
 </body>

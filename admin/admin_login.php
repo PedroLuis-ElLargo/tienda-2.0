@@ -55,7 +55,7 @@ if(isset($_POST['submit'])){
   ?>
 
   <!-- Admin login form section start -->
-  <section class=" form-container">
+  <section class="form-container">
     <form action="" method="post">
       <h3>Iniciar sesión nueva</h3>
       <p>Nombre de usuario predeterminado = <span>admin</span> & clave = <span>111</span></p>

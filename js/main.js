@@ -52,3 +52,23 @@ var swiper = new Swiper('.category-slider', {
 		},
 	},
 });
+
+var swiper = new Swiper('.products-slider', {
+	loop: true,
+	spaceBetween: 20,
+	grabCursor: true,
+	pagination: {
+		el: '.swiper-pagination',
+	},
+	breakpoints: {
+		550: {
+			slidesPerView: 2,
+		},
+		768: {
+			slidesPerView: 2,
+		},
+		1024: {
+			slidesPerView: 3,
+		},
+	},
+});

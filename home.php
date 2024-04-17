@@ -3,13 +3,14 @@
 
   session_start();
 
-if (isset($_SESSION['user_id'])) {
-  $user_id = $_SESSION['user_id'];
-}else {
-  $user_id = '';
-}
-?>
+  if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+  }else {
+    $user_id = '';
+  }
 
+  include 'components/wishlist_cart.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -127,13 +128,49 @@ if (isset($_SESSION['user_id'])) {
   <!-- Home category section ends -->
 
   <!-- Home products section starts -->
-  <section class="home-products"></section>
+  <section class="home-products">
+    <h1 class="heading">últimos productos</h1>
+    <div class="swiper products-slider">
+      <div class="swiper-wrapper">
+        <?php
+          $select_products = $connect->prepare("SELECT * FROM `products` LIMIT 6");
+          $select_products->execute();
+          if($select_products->rowCount() > 0) {
+            while ($fetch_products = $select_products->fetch (PDO::FETCH_ASSOC)){
+        ?>
+        <form action="" method="post" class="slide swiper-slide">
+          <input type="hidden" name="pid" value="<?= $fetch_products['id']; ?>">
+          <input type="hidden" name="name" value="<?= $fetch_products['name']; ?>">
+          <input type="hidden" name="price" value="<?= $fetch_products['price']; ?>">
+          <input type="hidden" name="image" value="<?= $fetch_products['image_01']; ?>">
+
+          <button type="submit" name="add_to_wishlist" class="fas fa-heart"></button>
+          <a href="quick_view.php?pid=<?= $fetch_products['id']; ?>" class="fas fa-eye"></a>
+          <img src="uploaded_img/<?= $fetch_products['image_01']; ?>" class="image" alt="image_products">
+          <div class="name"><?= $fetch_products['name']; ?></div>
+          <div class="flex">
+            <div class="price">RD$<span><?= $fetch_products['price']; ?></span>/-</div>
+            <input type="number" name="qty" class="qty" min="1" max="99" value="1"
+              onkeypress="if(this.value.length == 2) return false;">
+          </div>
+          <input type="submit" value="añadir al carrito" name="add_to_cart" class="btn">
+        </form>
+        <?php
+            }
+          }else {
+            echo '< class= "empty">¡Aún no se han añadido productos!</p>';
+          }
+        ?>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </section>
   <!-- Home products section ends -->
 
 
   <?php include 'components/footer.php'; ?>
   <!-- Link Swiper js -->
-  <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+  <script src=" https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
   <!-- Custom js file link -->
   <script src="js/main.js"></script>
 </body>

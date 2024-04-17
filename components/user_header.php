@@ -13,7 +13,7 @@
 
 <header class="header">
   <section class="flex">
-    <a href="dashboard.php" class="logo">S<span>hopie</span></a>
+    <a href="home.php" class="logo">S<span>hopie</span></a>
 
     <nav class="navbar">
       <a href="home.php">Inicio</a>
@@ -57,7 +57,7 @@
         <a href="admin_login.php" class="option-btn">Iniciar sesión</a>
         <a href="register_admin.php" class="option-btn">Registrarse</a>
       </div>
-      <a href="../components/admin_logout.php" onclick="return confirm('¿Cerrar sesión en este sitio web?');"
+      <a href="../components/user_logout.php" onclick="return confirm('¿Cerrar sesión en este sitio web?');"
         class="delete-btn">Cerrar sesión</a>
       <?php
         }else {
